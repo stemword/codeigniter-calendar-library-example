@@ -63,12 +63,12 @@ class Mycal_model extends CI_Model {
 	public function getcalender($year , $month)
 	{
 		$this->load->library('calendar',$this->prefs); // Load calender library
-		$data = array(
-        3  => 'check',
-        7  => 'check1',
-        13 => 'bar',
-        26 => 'ytr'
-		);
+		// $data = array(
+  //       3  => 'check',
+  //       7  => 'check1',
+  //       13 => 'bar',
+  //       26 => 'ytr'
+		// );
 		$data = $this->get_calender_data($year,$month);
 		return $this->calendar->generate($year , $month , $data);
 	}
@@ -79,10 +79,10 @@ class Mycal_model extends CI_Model {
 		//echo $this->db->last_query();exit;
 		$cal_data = array();
 		foreach ($query->result() as $row) {
-			//print_r($row);exit;
-			$cal_data[substr($row->date, 8,2)] = $row->content;
+            $calendar_date = date("Y-m-j", strtotime($row->date)); // to remove leading zero from day format
+			$cal_data[substr($calendar_date, 8,2)] = $row->content;
 		}
-		//print_r($cal_data);exit;
+		
 		return $cal_data;
 	}
 
